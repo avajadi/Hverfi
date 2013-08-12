@@ -1,4 +1,4 @@
-package org.hverfi.factory;
+package org.hverfi.mapping;
 
 import java.util.UUID;
 

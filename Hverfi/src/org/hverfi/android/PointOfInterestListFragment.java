@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -19,7 +18,7 @@ import org.avajadi.json.ListMapper;
 import org.hverfi.android.PointOfInterestLoader.RESTResponse;
 import org.hverfi.domain.PointOfInterest;
 import org.hverfi.factory.PointOfInterestFactory;
-import org.hverfi.factory.PointOfInterestMapper;
+import org.hverfi.mapping.PointOfInterestMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -43,9 +42,6 @@ public class PointOfInterestListFragment extends ListFragment implements
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 	private static final String ARGS_URI = "URI_FIND";
-
-	private static final String TAG = PointOfInterestListFragment.class
-			.getName();
 
 	private static final int LOADER_POI_FIND = 0x1;
 
@@ -98,7 +94,7 @@ public class PointOfInterestListFragment extends ListFragment implements
 				android.R.id.text1, pois));
 		
 		// This is our REST action.
-		Uri poiFindUri = Uri.parse("http://api.hverfi.org/poi/find");
+		Uri poiFindUri = Uri.parse("http://api.hverfi.org/poi");
 		Bundle args = new Bundle();
 		args.putParcelable(ARGS_URI, poiFindUri);
 		this.getActivity().getSupportLoaderManager()
@@ -182,7 +178,6 @@ public class PointOfInterestListFragment extends ListFragment implements
 
 	@Override
 	public Loader<RESTResponse> onCreateLoader(int id, Bundle args) {
-		Log.e(TAG, String.format("onCreateLoader( %n, args )", id));
 		if (args != null && args.containsKey(ARGS_URI)) {
 			Uri action = args.getParcelable(ARGS_URI);
 			return new PointOfInterestLoader(this.getActivity(), action);
